@@ -7,6 +7,8 @@ import pandas_profiling.formatters as formatters
 import pandas_profiling.templates as templates
 import pandas_profiling.plot as plot
 
+tablename = ''
+statement=''
 
 def to_html(sample, stats_object):
     """Generate a HTML report from summary statistics and a given sample.
@@ -208,5 +210,8 @@ def to_html(sample, stats_object):
         'overview_html': overview_html,
         'rows_html': rows_html,
         'sample_html': sample_html,
-        'correlation_html': correlations_html
+        'correlation_html': correlations_html,
+        'tablename': tablename,
+        'statement': statement,
+
     })

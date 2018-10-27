@@ -57,11 +57,15 @@ class ProfileReport(object):
     """
     html = ''
     file = None
+    tablename = ''
 
     def __init__(self, df, **kwargs):
         """Constructor see class documentation
         """
         sample = kwargs.get('sample', df.head())
+        tablename =  kwargs.get('tablename', 'Table')
+        report.tablename =  tablename
+        report.statement = kwargs.get('statement', '')
 
         description_set = describe(df, **kwargs)
 
@@ -119,7 +123,7 @@ class ProfileReport(object):
                 outputfile = 'profile_' + str(hash(self)) + ".html"
             # TODO: should be done in the template
             with codecs.open(outputfile, 'w+b', encoding='utf8') as self.file:
-                self.file.write(templates.template('wrapper').render(content=self.html))
+                self.file.write(templates.template('wrapper').render(tablename = tablename, content=self.html))
 
     def to_html(self):
         """Generate and return complete template as lengthy string
