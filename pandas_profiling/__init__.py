@@ -13,6 +13,9 @@ from .report import to_html
 
 NO_OUTPUTFILE = "pandas_profiling.no_outputfile"
 DEFAULT_OUTPUTFILE = "pandas_profiling.default_outputfile"
+tablename = ''
+
+
 
 class ProfileReport(object):
     """Generate a profile report from a Dataset stored as a pandas `DataFrame`.
@@ -57,12 +60,13 @@ class ProfileReport(object):
     """
     html = ''
     file = None
-    tablename = ''
 
     def __init__(self, df, **kwargs):
         """Constructor see class documentation
         """
         sample = kwargs.get('sample', df.head())
+
+        global tablename
         tablename =  kwargs.get('tablename', 'Table')
         report.tablename =  tablename
         report.statement = kwargs.get('statement', '')
