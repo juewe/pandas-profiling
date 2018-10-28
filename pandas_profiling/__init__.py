@@ -13,7 +13,7 @@ from .report import to_html
 
 NO_OUTPUTFILE = "pandas_profiling.no_outputfile"
 DEFAULT_OUTPUTFILE = "pandas_profiling.default_outputfile"
-tablename = ''
+dataframe_name = ''
 
 
 
@@ -46,6 +46,12 @@ class ProfileReport(object):
     pool_size : int
         Number of workers in thread pool
         The default is equal to the number of CPU.
+    dataframe_name : str
+        descriptive name of dataframe content
+        used by html generation for output, by default 'Overview'
+    statement : str
+        description, for HTML generation only
+
 
     Methods
     -------
@@ -66,9 +72,9 @@ class ProfileReport(object):
         """
         sample = kwargs.get('sample', df.head())
 
-        global tablename
-        tablename =  kwargs.get('tablename', 'Table')
-        report.tablename =  tablename
+        global dataframe_name
+        dataframe_name =  kwargs.get('dataframe_name', 'Overview')
+        report.dataframe_name =  dataframe_name
         report.statement = kwargs.get('statement', '')
 
         description_set = describe(df, **kwargs)
@@ -127,7 +133,7 @@ class ProfileReport(object):
                 outputfile = 'profile_' + str(hash(self)) + ".html"
             # TODO: should be done in the template
             with codecs.open(outputfile, 'w+b', encoding='utf8') as self.file:
-                self.file.write(templates.template('wrapper').render(tablename = tablename, content=self.html))
+                self.file.write(templates.template('wrapper').render(dataframe_name = dataframe_name, content=self.html))
 
     def to_html(self):
         """Generate and return complete template as lengthy string
